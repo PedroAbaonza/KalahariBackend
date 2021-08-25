@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T000_USUARIOS")
+@Table(name = "T000_USUARIOS", schema = "kalahari", catalog = "")
 public class T000UsuariosEntity {
     private String usuarioToken;
     private String notificacionToken;

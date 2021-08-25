@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T005_PREGUNTA")
+@Table(name = "T005_PREGUNTA", schema = "kalahari", catalog = "")
 public class T005PreguntaEntity {
     private int cdPregunta;
     private String pregunta;
@@ -23,6 +23,10 @@ public class T005PreguntaEntity {
     private String autorizador;
     private Timestamp fhAutorizacion;
     private double rate;
+    private T001TecnologiaEntity t001TecnologiaByTecnologia;
+    private T002NivelEntity t002NivelByNivel;
+    private T003IdiomaEntity t003IdiomaByIdioma;
+    private T004TipoPreguntaEntity t004TipoPreguntaByTipo;
 
     @Id
     @Column(name = "cdPregunta")
@@ -195,5 +199,45 @@ public class T005PreguntaEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cdPregunta, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, correcta1, correcta2, correcta3, correcta4, explicacion, creador, fhCreacion, autorizador, fhAutorizacion, rate);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia", nullable = false)
+    public T001TecnologiaEntity getT001TecnologiaByTecnologia() {
+        return t001TecnologiaByTecnologia;
+    }
+
+    public void setT001TecnologiaByTecnologia(T001TecnologiaEntity t001TecnologiaByTecnologia) {
+        this.t001TecnologiaByTecnologia = t001TecnologiaByTecnologia;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "nivel", referencedColumnName = "cdNivel")
+    public T002NivelEntity getT002NivelByNivel() {
+        return t002NivelByNivel;
+    }
+
+    public void setT002NivelByNivel(T002NivelEntity t002NivelByNivel) {
+        this.t002NivelByNivel = t002NivelByNivel;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "idioma", referencedColumnName = "cdIdioma")
+    public T003IdiomaEntity getT003IdiomaByIdioma() {
+        return t003IdiomaByIdioma;
+    }
+
+    public void setT003IdiomaByIdioma(T003IdiomaEntity t003IdiomaByIdioma) {
+        this.t003IdiomaByIdioma = t003IdiomaByIdioma;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tipo", referencedColumnName = "cdTipoPregunta", nullable = false)
+    public T004TipoPreguntaEntity getT004TipoPreguntaByTipo() {
+        return t004TipoPreguntaByTipo;
+    }
+
+    public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
+        this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
     }
 }

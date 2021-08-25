@@ -4,10 +4,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T007_TEMPLATE_PREGUNTA")
+@Table(name = "T007_TEMPLATE_PREGUNTA", schema = "kalahari", catalog = "")
 public class T007TemplatePreguntaEntity {
     private int cdTemplatePregunta;
     private Integer tiempoRespuesta;
+    private T006TemplateEntity t006TemplateByCdTemplate;
+    private T005PreguntaEntity t005PreguntaByCdPregunta;
 
     @Id
     @Column(name = "cdTemplatePregunta")
@@ -40,5 +42,25 @@ public class T007TemplatePreguntaEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cdTemplatePregunta, tiempoRespuesta);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "cdTemplate", referencedColumnName = "cdTemplate", nullable = false)
+    public T006TemplateEntity getT006TemplateByCdTemplate() {
+        return t006TemplateByCdTemplate;
+    }
+
+    public void setT006TemplateByCdTemplate(T006TemplateEntity t006TemplateByCdTemplate) {
+        this.t006TemplateByCdTemplate = t006TemplateByCdTemplate;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta", nullable = false)
+    public T005PreguntaEntity getT005PreguntaByCdPregunta() {
+        return t005PreguntaByCdPregunta;
+    }
+
+    public void setT005PreguntaByCdPregunta(T005PreguntaEntity t005PreguntaByCdPregunta) {
+        this.t005PreguntaByCdPregunta = t005PreguntaByCdPregunta;
     }
 }
