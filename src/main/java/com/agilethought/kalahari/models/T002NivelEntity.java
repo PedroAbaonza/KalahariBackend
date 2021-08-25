@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T002_NIVEL")
+@Table(name = "T002_NIVEL", schema = "kalahari", catalog = "")
 public class T002NivelEntity {
     private int cdNivel;
     private String descripcion;

@@ -5,15 +5,15 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T011_GRUPO")
+@Table(name = "T011_GRUPO", schema = "kalahari", catalog = "")
 public class T011GrupoEntity {
     private int cdGrupo;
     private String descripcion;
     private Timestamp fechaAplicacion;
-    private String example;
 
     @Id
-    @Column(name = "cdGrupo")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdGrupo", unique = true, nullable = false)
     public int getCdGrupo() {
         return cdGrupo;
     }
@@ -40,14 +40,6 @@ public class T011GrupoEntity {
 
     public void setFechaAplicacion(Timestamp fechaAplicacion) {
         this.fechaAplicacion = fechaAplicacion;
-    }
-
-    public String getexample() {
-        return example;
-    }
-
-    public void setexample(String example) {
-        example = example;
     }
 
     @Override
