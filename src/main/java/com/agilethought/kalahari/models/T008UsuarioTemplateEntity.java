@@ -13,7 +13,8 @@ public class T008UsuarioTemplateEntity {
     private T006TemplateEntity t006TemplateByCdTemplate;
 
     @Id
-    @Column(name = "cdUsuarioTemplate")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdUsuarioTemplate", unique = true, nullable = false)
     public int getCdUsuarioTemplate() {
         return cdUsuarioTemplate;
     }
