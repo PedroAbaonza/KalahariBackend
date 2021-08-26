@@ -20,4 +20,5 @@ public class UsuariosController {
     public ArrayList<T000UsuariosEntity> obtenerUsuarios() {
         return usuarioService.obtenerUsuarios();
     }
+
 }
