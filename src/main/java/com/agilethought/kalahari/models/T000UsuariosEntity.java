@@ -13,6 +13,7 @@ public class T000UsuariosEntity {
     private String email;
     private Timestamp fhRegistro;
     private Integer grupo;
+    private T010UniversidadEntity t010UniversidadByUniversidad;
 
     @Id
     @Column(name = "usuarioToken")
@@ -74,16 +75,26 @@ public class T000UsuariosEntity {
         this.grupo = grupo;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "universidad", referencedColumnName = "cdUniversidad", nullable = false)
+    public T010UniversidadEntity getT010UniversidadByUniversidad() {
+        return t010UniversidadByUniversidad;
+    }
+
+    public void setT010UniversidadByUniversidad(T010UniversidadEntity t010UniversidadByUniversidad) {
+        this.t010UniversidadByUniversidad = t010UniversidadByUniversidad;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         T000UsuariosEntity that = (T000UsuariosEntity) o;
-        return Objects.equals(usuarioToken, that.usuarioToken) && Objects.equals(notificacionToken, that.notificacionToken) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(fhRegistro, that.fhRegistro) && Objects.equals(grupo, that.grupo);
+        return Objects.equals(usuarioToken, that.usuarioToken) && Objects.equals(notificacionToken, that.notificacionToken) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(fhRegistro, that.fhRegistro) && Objects.equals(grupo, that.grupo) && Objects.equals(t010UniversidadByUniversidad, that.t010UniversidadByUniversidad);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(usuarioToken, notificacionToken, nombre, email, fhRegistro, grupo);
+        return Objects.hash(usuarioToken, notificacionToken, nombre, email, fhRegistro, grupo, t010UniversidadByUniversidad);
     }
 }
