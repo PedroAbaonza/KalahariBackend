@@ -10,8 +10,7 @@ public class T006TemplateEntity {
     private String nombre;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cdTemplate", unique = true, nullable = false)
+    @Column(name = "cdTemplate")
     public int getCdTemplate() {
         return cdTemplate;
     }

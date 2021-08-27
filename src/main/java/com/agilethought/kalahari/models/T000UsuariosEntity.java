@@ -13,9 +13,10 @@ public class T000UsuariosEntity {
     private String email;
     private Timestamp fhRegistro;
     private Integer grupo;
-
+    
     @Id
-    @Column(name = "usuarioToken")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usuarioToken", unique = true, nullable = false)
     public String getUsuarioToken() {
         return usuarioToken;
     }

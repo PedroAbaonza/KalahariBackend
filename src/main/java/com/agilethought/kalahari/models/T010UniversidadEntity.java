@@ -10,8 +10,7 @@ public class T010UniversidadEntity {
     private String nombre;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cdUniversidad", unique = true, nullable = false)
+    @Column(name = "cdUniversidad")
     public int getCdUniversidad() {
         return cdUniversidad;
     }

@@ -21,8 +21,7 @@ public class T009UsuarioTemplatePreguntaRespuestaEntity {
     private T005PreguntaEntity t005PreguntaByCdPregunta;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cdUsuarioTemplateRespuesta", unique = true, nullable = false)
+    @Column(name = "cdUsuarioTemplateRespuesta")
     public int getCdUsuarioTemplateRespuesta() {
         return cdUsuarioTemplateRespuesta;
     }
