@@ -1,6 +1,9 @@
 package com.agilethought.kalahari.controllers;
 
+import com.agilethought.kalahari.dto.CalificacionesPorGrupoDTO;
 import com.agilethought.kalahari.models.T011GrupoEntity;
+import com.agilethought.kalahari.models.V002UsuariosPorGrupoEntity;
+import com.agilethought.kalahari.models.V003CalificacionesPorGrupoEntity;
 import com.agilethought.kalahari.services.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +42,20 @@ public class GrupoController {
         }else{
             return "No se pudo eliminar el usuario con id "+ cdGrupo;
         }
+    }
+
+    @GetMapping(path = "/calificaciones/usuarios_por_grupo/{cdGrupo}")
+    public ArrayList<V002UsuariosPorGrupoEntity> obtenerUsuariosPorGrupo(@PathVariable("cdGrupo") Integer cdGrupo) {
+        return this.grupoService.obtenerUsuariosPorGrupo(cdGrupo);
+    }
+
+    @GetMapping(path = "/calificaciones/calificaciones_por_grupo/{cdGrupo}")
+    public ArrayList<V003CalificacionesPorGrupoEntity> obtenerCalificacionesPorGrupo(@PathVariable("cdGrupo") Integer cdGrupo) {
+        return this.grupoService.obtenerCalificacionesPorGrupo(cdGrupo);
+    }
+
+    @GetMapping(path = "/calificaciones/{cdGrupo}")
+    public ArrayList<CalificacionesPorGrupoDTO> obtenerCalificaciones(@PathVariable("cdGrupo") Integer cdGrupo) {
+        return this.grupoService.obtenerCalificaciones(cdGrupo);
     }
 }
