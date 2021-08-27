@@ -27,6 +27,8 @@ public class T005PreguntaEntity {
     private T002NivelEntity t002NivelByNivel;
     private T003IdiomaEntity t003IdiomaByIdioma;
     private T004TipoPreguntaEntity t004TipoPreguntaByTipo;
+    //Se agrego este atributo para poder obtener la columna de tiempoRespuesta de la tabla TemplatePregunta
+    private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -203,7 +205,7 @@ public class T005PreguntaEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia", nullable = false)
+    @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia")
     public T001TecnologiaEntity getT001TecnologiaByTecnologia() {
         return t001TecnologiaByTecnologia;
     }
@@ -233,12 +235,22 @@ public class T005PreguntaEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tipo", referencedColumnName = "cdTipoPregunta", nullable = false)
+    @JoinColumn(name = "tipo", referencedColumnName = "cdTipoPregunta")
     public T004TipoPreguntaEntity getT004TipoPreguntaByTipo() {
         return t004TipoPreguntaByTipo;
     }
 
     public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
         this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
+    public T007TemplatePreguntaEntity getT007TemplatePreguntaEntity() {
+        return t007TemplatePreguntaEntity;
+    }
+
+    public void setT007TemplatePreguntaEntity(T007TemplatePreguntaEntity t007TemplatePreguntaEntity) {
+        this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
     }
 }
