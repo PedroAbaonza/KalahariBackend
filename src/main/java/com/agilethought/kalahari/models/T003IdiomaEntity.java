@@ -10,7 +10,8 @@ public class T003IdiomaEntity {
     private String descripcion;
 
     @Id
-    @Column(name = "cdIdioma")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdIdioma", unique = true, nullable = false)
     public String getCdIdioma() {
         return cdIdioma;
     }

@@ -11,7 +11,8 @@ public class T002NivelEntity {
     private Integer puntaje;
 
     @Id
-    @Column(name = "cdNivel")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdNivel", unique = true, nullable = false)
     public int getCdNivel() {
         return cdNivel;
     }
