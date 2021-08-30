@@ -3,6 +3,7 @@ package com.agilethought.kalahari.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +15,7 @@ public class T001TecnologiaEntity {
     private String cdTecnologia;
     private String descripcion;
     //*********************
+    @JsonIgnore
     private List<T005PreguntaEntity> preguntas;
 
     @Id
@@ -36,8 +38,8 @@ public class T001TecnologiaEntity {
         this.descripcion = descripcion;
     }
 
-    @JsonIgnore
-    @OneToMany(targetEntity = T005PreguntaEntity.class, cascade = CascadeType.ALL)
+
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t001TecnologiaByTecnologia")
     public List<T005PreguntaEntity> getPreguntas() {
         return preguntas;
     }

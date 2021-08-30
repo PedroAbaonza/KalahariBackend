@@ -54,9 +54,8 @@ public class PreguntasController {
      * @param id
      * @return String
      */
-    @PutMapping("actualizar/{id}")
-    public @ResponseBody String actualizarPregunta(@RequestBody T005PreguntaEntity t005PreguntaEntity,
-                                                   @PathVariable("id") int id){
-        return preguntasService.actualizarPregunta(t005PreguntaEntity, id);
+    @PutMapping("actualizar")
+    public @ResponseBody String actualizarPregunta(@RequestBody T005PreguntaEntity t005PreguntaEntity){
+        return preguntasService.actualizarPregunta(t005PreguntaEntity);
     }
 }

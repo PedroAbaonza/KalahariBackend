@@ -1,5 +1,7 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -204,7 +206,7 @@ public class T005PreguntaEntity {
         return Objects.hash(cdPregunta, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, correcta1, correcta2, correcta3, correcta4, explicacion, creador, fhCreacion, autorizador, fhAutorizacion, rate);
     }
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia")
     public T001TecnologiaEntity getT001TecnologiaByTecnologia() {
         return t001TecnologiaByTecnologia;
@@ -213,6 +215,7 @@ public class T005PreguntaEntity {
     public void setT001TecnologiaByTecnologia(T001TecnologiaEntity t001TecnologiaByTecnologia) {
         this.t001TecnologiaByTecnologia = t001TecnologiaByTecnologia;
     }
+
 
     @ManyToOne
     @JoinColumn(name = "nivel", referencedColumnName = "cdNivel")

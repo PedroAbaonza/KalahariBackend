@@ -30,8 +30,8 @@ public class TecnologiaController {
         return tecnologiaService.eliminarTecnologia(id);
     }
 
-    @PutMapping("actualizar/{id}")
-    public @ResponseBody String actualizarTecnologia(@RequestBody T001TecnologiaEntity t001TecnologiaEntity, @PathVariable("id") String id){
-        return tecnologiaService.actualizarTecnologia(t001TecnologiaEntity, id);
+    @PutMapping("actualizar")
+    public @ResponseBody String actualizarTecnologia(@RequestBody T001TecnologiaEntity t001TecnologiaEntity){
+        return tecnologiaService.actualizarTecnologia(t001TecnologiaEntity);
     }
 }

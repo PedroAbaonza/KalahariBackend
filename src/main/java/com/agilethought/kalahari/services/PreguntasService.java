@@ -68,11 +68,10 @@ public class PreguntasService {
      * @param id
      * @return
      */
-    public String actualizarPregunta(T005PreguntaEntity t005PreguntaEntity, int id){
-        if (preguntasRepository.existsById(id)){
+    public String actualizarPregunta(T005PreguntaEntity t005PreguntaEntity){
+        if (preguntasRepository.existsById(t005PreguntaEntity.getCdPregunta())){
             Date fecha = new Date();
             t005PreguntaEntity.setFhCreacion(new Timestamp(fecha.getTime()));
-            t005PreguntaEntity.setCdPregunta(id);
             preguntasRepository.save(t005PreguntaEntity);
             return "Se actualizó correctamente";
         }

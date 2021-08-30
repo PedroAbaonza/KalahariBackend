@@ -47,7 +47,7 @@ public class T002NivelEntity {
     }
 
     @JsonIgnore
-    @OneToMany(targetEntity = T005PreguntaEntity.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t002NivelByNivel")
     public List<T005PreguntaEntity> getPreguntas() {
         return preguntas;
     }
