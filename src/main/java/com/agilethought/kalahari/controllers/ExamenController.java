@@ -22,11 +22,6 @@ public class ExamenController {
 	@Autowired
 	ExamenService examenService;
 
-	@GetMapping(value = "/tecnologias")
-	public List<T006TemplateEntity> mostrarTecnologias() throws Exception {
-		return examenService.mostrarTecnologias();
-	}
-
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/", consumes = "application/json", produces = "application/json")
 	public List<ExamenResponse> asignarExamen(@RequestBody ExamenRequest request) {

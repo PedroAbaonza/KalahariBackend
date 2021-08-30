@@ -28,10 +28,6 @@ public class ExamenService {
 	@Autowired
 	UsuariosTemplateRepository usuariosTemplateRepository;
 
-	public List<T006TemplateEntity> mostrarTecnologias() {
-		return (List<T006TemplateEntity>) templateRepository.findAll();
-	}
-
 	public List<ExamenResponse> asignarExamen(ExamenRequest request) {
 		List<ExamenResponse> respuesta = new ArrayList<ExamenResponse>();
 		List<T006TemplateEntity> tecnologias = new ArrayList<T006TemplateEntity>();
