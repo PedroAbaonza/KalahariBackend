@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -31,6 +32,7 @@ public class T005PreguntaEntity {
     private T004TipoPreguntaEntity t004TipoPreguntaByTipo;
     //Se agrego este atributo para poder obtener la columna de tiempoRespuesta de la tabla TemplatePregunta
     private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
+    private List<T007TemplatePreguntaEntity> preguntasTemplate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -247,6 +249,15 @@ public class T005PreguntaEntity {
         this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
     }
 
+    @JsonIgnore
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
+    public List<T007TemplatePreguntaEntity> getTemplatePreguntas() {
+        return preguntasTemplate;
+    }
+
+    public void setTemplatePreguntas(List<T007TemplatePreguntaEntity> preguntasTemplate) {
+        this.preguntasTemplate = preguntasTemplate;
+    }
     @OneToOne
     @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
     public T007TemplatePreguntaEntity getT007TemplatePreguntaEntity() {
