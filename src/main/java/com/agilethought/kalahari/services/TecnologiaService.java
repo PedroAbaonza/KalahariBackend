@@ -59,10 +59,10 @@ public class TecnologiaService {
      * @param id
      * @return String
      */
-    public String actualizarTecnologia(T001TecnologiaEntity t001TecnologiaEntity, String id){
+    public String actualizarTecnologia(T001TecnologiaEntity t001TecnologiaEntity){
 
-        if(tecnologiaRepository.existsById(id)){
-            tecnologiaRepository.save(t001TecnologiaEntity);
+        if(tecnologiaRepository.existsById(t001TecnologiaEntity.getCdTecnologia())){
+           tecnologiaRepository.save(t001TecnologiaEntity);
             return "Se actualizo correctamente";
         }
         else

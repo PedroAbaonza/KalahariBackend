@@ -1,5 +1,8 @@
 package com.agilethought.kalahari.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  *
  * Clase que sirve para recibir todos los parametros utilizados para mostrar la tabla de preguntas

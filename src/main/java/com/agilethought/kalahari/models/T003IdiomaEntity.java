@@ -36,7 +36,7 @@ public class T003IdiomaEntity {
     }
 
     @JsonIgnore
-    @OneToMany(targetEntity = T005PreguntaEntity.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t003IdiomaByIdioma")
     public List<T005PreguntaEntity> getPreguntas() {
         return preguntas;
     }
