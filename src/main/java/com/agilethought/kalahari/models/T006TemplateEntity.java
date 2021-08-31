@@ -1,6 +1,9 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -8,6 +11,7 @@ import java.util.Objects;
 public class T006TemplateEntity {
     private int cdTemplate;
     private String nombre;
+    private List<T007TemplatePreguntaEntity> preguntasTemplate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +42,15 @@ public class T006TemplateEntity {
         return cdTemplate == that.cdTemplate && Objects.equals(nombre, that.nombre);
     }
 
+    @JsonIgnore
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t006TemplateByCdTemplate")
+    public List<T007TemplatePreguntaEntity> getTemplatePreguntas() {
+        return preguntasTemplate;
+    }
+
+    public void setTemplatePreguntas(List<T007TemplatePreguntaEntity> preguntasTemplate) {
+        this.preguntasTemplate = preguntasTemplate;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(cdTemplate, nombre);

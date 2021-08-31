@@ -1,6 +1,9 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -8,6 +11,9 @@ import java.util.Objects;
 public class T003IdiomaEntity {
     private String cdIdioma;
     private String descripcion;
+
+    //*************
+    private List<T005PreguntaEntity> preguntas;
 
     @Id
     @Column(name = "cdIdioma")
@@ -27,6 +33,16 @@ public class T003IdiomaEntity {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @JsonIgnore
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t003IdiomaByIdioma")
+    public List<T005PreguntaEntity> getPreguntas() {
+        return preguntas;
+    }
+
+    public void setPreguntas(List<T005PreguntaEntity> preguntas) {
+        this.preguntas = preguntas;
     }
 
     @Override
