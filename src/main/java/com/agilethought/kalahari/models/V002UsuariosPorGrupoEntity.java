@@ -1,9 +1,11 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Immutable
@@ -15,6 +17,7 @@ public class V002UsuariosPorGrupoEntity {
     private String nombre;
     private String universidad;
     private BigDecimal promedio;
+    private Date fecha;
 
     @Id
     @Column(name = "usuarioToken")
@@ -64,5 +67,16 @@ public class V002UsuariosPorGrupoEntity {
 
     public void setPromedio(BigDecimal promedio) {
         this.promedio = promedio;
+    }
+
+    @Basic
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @Column(name = "fecha")
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

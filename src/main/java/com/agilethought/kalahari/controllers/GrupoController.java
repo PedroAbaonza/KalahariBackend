@@ -58,4 +58,9 @@ public class GrupoController {
     public ArrayList<CalificacionesPorGrupoDTO> obtenerCalificaciones(@PathVariable("cdGrupo") Integer cdGrupo) {
         return this.grupoService.obtenerCalificaciones(cdGrupo);
     }
+    
+    @GetMapping(path = "/tecnologias/{cdGrupo}")
+    public String[] obtenerTecnologias(@PathVariable("cdGrupo") Integer cdGrupo) {
+        return this.grupoService.obtenerTecnologias(cdGrupo);
+    }
 }
