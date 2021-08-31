@@ -35,15 +35,12 @@ public class PreguntasService {
      * @param t005PreguntaEntity
      * @return String
      */
-    public String agregarPregunta(T005PreguntaEntity t005PreguntaEntity) {
+    public T005PreguntaEntity agregarPregunta(T005PreguntaEntity t005PreguntaEntity) {
 
         Date fecha = new Date();
         t005PreguntaEntity.setFhCreacion(new Timestamp(fecha.getTime()));
         preguntasRepository.save(t005PreguntaEntity);
-        if(preguntasRepository.existsById(t005PreguntaEntity.getCdPregunta()))
-            return "Se agregó correctamente con el id: " + t005PreguntaEntity.getCdPregunta();
-        else
-            return "No se agregó correctamente";
+            return t005PreguntaEntity;
     }
 
     /**
@@ -65,8 +62,7 @@ public class PreguntasService {
      * Servicio para modificar una tecnologia con su id como parametro y regresa un mensaje
      * si se pudo  no o actualizar correctamente
      * @param t005PreguntaEntity
-     * @param id
-     * @return
+     * @return String
      */
     public String actualizarPregunta(T005PreguntaEntity t005PreguntaEntity){
         if (preguntasRepository.existsById(t005PreguntaEntity.getCdPregunta())){
