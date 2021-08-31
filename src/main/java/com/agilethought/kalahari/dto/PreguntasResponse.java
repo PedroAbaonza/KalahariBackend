@@ -3,12 +3,15 @@ package com.agilethought.kalahari.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import static java.sql.Types.NULL;
+
 /**
  *
  * Clase que sirve para recibir todos los parametros utilizados para mostrar la tabla de preguntas
  */
 public class PreguntasResponse {
 
+    private int cdPregunta;
     private String pregunta;
     private String nivel;
     private String idioma;
@@ -22,12 +25,12 @@ public class PreguntasResponse {
     private Byte correcta2;
     private Byte correcta3;
     private Byte correcta4;
-    private int tiempo;
 
-    public PreguntasResponse(String pregunta, String nivel, String idioma, String tipo,
+    public PreguntasResponse(int cdPregunta, String pregunta, String nivel, String idioma, String tipo,
                              String tecnologia, String respuesta1, String respuesta2,
                              String respuesta3, String respuesta4, Byte correcta1,
-                             Byte correcta2, Byte correcta3, Byte correcta4, int tiempo) {
+                             Byte correcta2, Byte correcta3, Byte correcta4) {
+        this.cdPregunta = cdPregunta;
         this.pregunta = pregunta;
         this.nivel = nivel;
         this.idioma = idioma;
@@ -41,8 +44,14 @@ public class PreguntasResponse {
         this.correcta2 = correcta2;
         this.correcta3 = correcta3;
         this.correcta4 = correcta4;
-        this.tiempo = tiempo;
+        }
 
+    public int getCdPregunta() {
+        return cdPregunta;
+    }
+
+    public void setCdPregunta(int cdPregunta) {
+        this.cdPregunta = cdPregunta;
     }
 
     public String getPregunta() {
@@ -149,11 +158,4 @@ public class PreguntasResponse {
         this.correcta4 = correcta4;
     }
 
-    public int getTiempo() {
-        return tiempo;
-    }
-
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
-    }
 }

@@ -30,10 +30,10 @@ public class PreguntasController {
      *
      * Agregamos una pregunta a la base de datos y regresa un mensaje si se pudo o no agregar
      * @param t005PreguntaEntity
-     * @return String
+     * @return T005PreguntaEntity
      */
     @PostMapping("agregar")
-    public @ResponseBody String agregarPreguntas(@RequestBody T005PreguntaEntity t005PreguntaEntity){
+    public @ResponseBody T005PreguntaEntity agregarPreguntas(@RequestBody T005PreguntaEntity t005PreguntaEntity){
         return preguntasService.agregarPregunta(t005PreguntaEntity);
     }
 
@@ -51,7 +51,6 @@ public class PreguntasController {
      * Modificamos una tecnologia con su id como parametro y regresa un mensaje
      * si se pudo  no o actualizar correctamente
      * @param t005PreguntaEntity
-     * @param id
      * @return String
      */
     @PutMapping("actualizar")
