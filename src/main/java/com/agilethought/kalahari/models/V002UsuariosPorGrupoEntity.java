@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Immutable
 @NamedQuery(name = "V002UsuariosPorGrupoEntity.encontrarPorGrupo", query = "SELECT v FROM V002UsuariosPorGrupoEntity v WHERE v.grupo = ?1")
+@NamedQuery(name = "V002UsuariosPorGrupoEntity.encontrarPorToken", query = "SELECT v FROM V002UsuariosPorGrupoEntity v WHERE v.usuarioToken = ?1")
 @Table(name = "V002_USUARIOS_POR_GRUPO", schema = "kalahari", catalog = "")
 public class V002UsuariosPorGrupoEntity {
     private String usuarioToken;
