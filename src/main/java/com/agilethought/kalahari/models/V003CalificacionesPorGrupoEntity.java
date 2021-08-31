@@ -1,9 +1,11 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Immutable
@@ -16,7 +18,6 @@ public class V003CalificacionesPorGrupoEntity {
     private String nombre;
     private String tecnologia;
     private BigDecimal calificacion;
-    private int resuelto;
 
     @Id
     @Column(name = "cdUsuarioTemplate")
@@ -72,15 +73,5 @@ public class V003CalificacionesPorGrupoEntity {
 
     public void setCalificacion(BigDecimal calificacion) {
         this.calificacion = calificacion;
-    }
-
-    @Basic
-    @Column(name = "resuelto")
-    public int getResuelto() {
-        return resuelto;
-    }
-
-    public void setResuelto(int resuelto) {
-        this.resuelto = resuelto;
     }
 }
