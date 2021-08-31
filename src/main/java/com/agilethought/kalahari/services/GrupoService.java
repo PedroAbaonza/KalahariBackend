@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
@@ -56,6 +57,14 @@ public class GrupoService {
 
     public ArrayList<V003CalificacionesPorGrupoEntity> obtenerCalificacionesPorGrupo(Integer grupo) {
         return (ArrayList<V003CalificacionesPorGrupoEntity>) calificacionesPorGrupoRepository.encontrarPorGrupo(grupo);
+    }
+
+    public Optional<V002UsuariosPorGrupoEntity> obtenerUsuarioPorToken(String token) {
+        return (Optional<V002UsuariosPorGrupoEntity>) usuariosPorGrupoRepository.encontrarPorToken(token);
+    }
+
+    public ArrayList<V003CalificacionesPorGrupoEntity> obtenerCalificacionPorToken(String token) {
+        return (ArrayList<V003CalificacionesPorGrupoEntity>) calificacionesPorGrupoRepository.encontrarPorToken(token);
     }
 
     public ArrayList<CalificacionesPorGrupoDTO> obtenerCalificaciones(Integer grupo) {
@@ -103,5 +112,38 @@ public class GrupoService {
         }
 
         return tecnologias.toArray(new String[0]);
+    }
+
+    public Optional<CalificacionesPorGrupoDTO> obtenerCalificaciones(String token) {
+        Optional<V002UsuariosPorGrupoEntity> usuarioPorToken = obtenerUsuarioPorToken(token);
+        ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorToken = obtenerCalificacionPorToken(token);
+
+        if (!usuarioPorToken.isPresent()) {
+            return null;
+        }
+
+        ArrayList<TecnologiaCalificacionDTO> teccalDTO = new ArrayList<>();
+
+        for (V003CalificacionesPorGrupoEntity teccal : calificacionesPorToken) {
+            teccalDTO.add(new TecnologiaCalificacionDTO(
+                    teccal.getTecnologia(),
+                    teccal.getCalificacion()
+            ));
+        }
+
+        String usuarioToken = usuarioPorToken.get().getUsuarioToken();
+        String nombre = usuarioPorToken.get().getNombre();
+        String universidad = usuarioPorToken.get().getUniversidad();
+        BigDecimal promedio = usuarioPorToken.get().getPromedio();
+        Date fecha = usuarioPorToken.get().getFecha();
+
+        Map<String, BigDecimal> examenes = new LinkedHashMap<>();
+        if (teccalDTO != null) {
+            for (TecnologiaCalificacionDTO teccal : teccalDTO) {
+                examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+            }
+        }
+
+        return Optional.of(new CalificacionesPorGrupoDTO(usuarioToken, nombre, universidad, examenes, promedio, fecha));
     }
 }
