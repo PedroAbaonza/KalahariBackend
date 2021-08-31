@@ -22,7 +22,6 @@ public class UsuariosRHController {
     public Optional<T013UsuariosRH> obtenerUsuariosRHid(@PathVariable String id) {
         return usuarioRHService.obtenerPorId(id);
     }
-
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping
     public String agregarUsuario(@RequestBody T013UsuariosRH t013UsuariosRH){
