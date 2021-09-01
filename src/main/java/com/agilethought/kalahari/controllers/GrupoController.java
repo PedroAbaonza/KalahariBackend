@@ -24,6 +24,11 @@ public class GrupoController {
         return grupoService.obtenerGrupos();
     }
 
+    @GetMapping("/gruposOrdered")
+    public ArrayList<T011GrupoEntity> obtenerGruposOrdered(){
+        return grupoService.obtenerGruposOrderedByFechaAplicacion();
+    }
+
     @PostMapping()
     public T011GrupoEntity guardarGrupo(@RequestBody T011GrupoEntity grupo) {
         grupo.setFechaAplicacion(Timestamp.valueOf("2020-05-01 15:30:00.0"));
