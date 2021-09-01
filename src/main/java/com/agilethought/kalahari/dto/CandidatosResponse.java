@@ -5,6 +5,7 @@ public class CandidatosResponse {
     protected String nombreCandidato;
     protected String apellidoPaternoCandidato;
     protected String apellidoMaternoCandidato;
+    protected String correoCandidato;
     protected String nombre;
     protected String descripcion;
 
@@ -12,11 +13,12 @@ public class CandidatosResponse {
 
     }
 
-    public CandidatosResponse(int cdCandidato, String nombreCandidato, String apellidoPaternoCandidato, String apellidoMaternoCandidato, String nombre, String descripcion) {
+    public CandidatosResponse(int cdCandidato, String nombreCandidato, String apellidoPaternoCandidato, String apellidoMaternoCandidato,String correoCandidato, String nombre, String descripcion) {
         this.cdCandidato = cdCandidato;
         this.nombreCandidato = nombreCandidato;
         this.apellidoPaternoCandidato = apellidoPaternoCandidato;
         this.apellidoMaternoCandidato = apellidoMaternoCandidato;
+        this.correoCandidato = correoCandidato;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
@@ -51,6 +53,14 @@ public class CandidatosResponse {
 
     public void setApellidoMaternoCandidato(String apellidoMaternoCandidato) {
         this.apellidoMaternoCandidato = apellidoMaternoCandidato;
+    }
+
+    public String getCorreoCandidato() {
+        return correoCandidato;
+    }
+
+    public void setCorreoCandidato(String correoCandidato) {
+        this.correoCandidato = correoCandidato;
     }
 
     public String getNombre() {

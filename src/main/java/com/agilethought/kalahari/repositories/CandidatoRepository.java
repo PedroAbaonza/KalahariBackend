@@ -14,6 +14,7 @@ public interface CandidatoRepository extends JpaRepository<T014Candidato, Intege
             "c.nombreCandidato, " +
             "c.apellidoPaternoCandidato, " +
             "c.apellidoMaternoCandidato, " +
+            "c.correoCandidato," +
             "u.nombre, " +
             "g.descripcion) FROM T014Candidato c " +
             "JOIN T010UniversidadEntity u ON c.cdUniversidad = u.cdUniversidad " +
