@@ -1,7 +1,9 @@
 package com.agilethought.kalahari.models;
 
 import javax.persistence.*;
+
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +12,8 @@ public class T011GrupoEntity {
     private int cdGrupo;
     private String descripcion;
     private Timestamp fechaAplicacion;
+    private List<T000UsuariosEntity> usuarios;
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +46,17 @@ public class T011GrupoEntity {
         this.fechaAplicacion = fechaAplicacion;
     }
 
-    @Override
+
+    @OneToMany(mappedBy="t011GrupoByGrupo")
+    public List<T000UsuariosEntity> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<T000UsuariosEntity> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
