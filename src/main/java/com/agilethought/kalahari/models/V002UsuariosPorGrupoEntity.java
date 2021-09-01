@@ -17,7 +17,6 @@ public class V002UsuariosPorGrupoEntity {
     private int grupo;
     private String nombre;
     private String universidad;
-    private BigDecimal promedio;
     private Date fecha;
 
     @Id
@@ -58,16 +57,6 @@ public class V002UsuariosPorGrupoEntity {
 
     public void setUniversidad(String universidad) {
         this.universidad = universidad;
-    }
-
-    @Basic
-    @Column(name = "promedio")
-    public BigDecimal getPromedio() {
-        return promedio;
-    }
-
-    public void setPromedio(BigDecimal promedio) {
-        this.promedio = promedio;
     }
 
     @Basic

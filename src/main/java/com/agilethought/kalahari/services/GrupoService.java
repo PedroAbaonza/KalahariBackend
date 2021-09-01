@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -90,14 +91,25 @@ public class GrupoService {
             String usuarioToken = usuario.getUsuarioToken();
             String nombre = usuario.getNombre();
             String universidad = usuario.getUniversidad();
-            BigDecimal promedio = usuario.getPromedio();
             Date fecha = usuario.getFecha();
 
             List<TecnologiaCalificacionDTO> teccalDTO = teccalPorUsuario.get(usuarioToken);
             Map<String, BigDecimal> examenes = new LinkedHashMap<>();
+            BigDecimal promedio = null;
             if (teccalDTO != null) {
+                promedio = new BigDecimal(0);
+                BigDecimal acumulado = new BigDecimal(0);
+                BigDecimal cantidad = new BigDecimal(0);
+                BigDecimal adicion = new BigDecimal(1);
                 for (TecnologiaCalificacionDTO teccal : teccalDTO) {
-                    examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+                    if (teccal.getCalificacion() != null) {
+                        examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+                        acumulado = acumulado.add(teccal.getCalificacion());
+                        cantidad = cantidad.add(adicion);
+                    }
+                }
+                if (cantidad.intValue() != 0) {
+                    promedio = acumulado.divide(cantidad, 2, RoundingMode.DOWN);
                 }
             }
             calificaciones.add(new CalificacionesPorGrupoDTO(usuarioToken, nombre, universidad, examenes, promedio, fecha));
@@ -106,16 +118,16 @@ public class GrupoService {
         return calificaciones;
     }
 
-    public String[] obtenerTecnologias(Integer grupo) {
+    public Map<String, Integer> obtenerTecnologias(Integer grupo) {
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
 
-        HashSet<String> tecnologias = new HashSet<>();
+        Map<String, Integer> tecnologias = new HashMap<>();
 
         for (V003CalificacionesPorGrupoEntity calificacion : calificacionesPorGrupo) {
-            tecnologias.add(calificacion.getTecnologia());
+            tecnologias.put(calificacion.getTecnologia(), calificacion.getCdTemplate());
         }
 
-        return tecnologias.toArray(new String[0]);
+        return tecnologias;
     }
 
     public Optional<CalificacionesPorGrupoDTO> obtenerCalificaciones(String token) {
@@ -138,13 +150,24 @@ public class GrupoService {
         String usuarioToken = usuarioPorToken.get().getUsuarioToken();
         String nombre = usuarioPorToken.get().getNombre();
         String universidad = usuarioPorToken.get().getUniversidad();
-        BigDecimal promedio = usuarioPorToken.get().getPromedio();
         Date fecha = usuarioPorToken.get().getFecha();
 
         Map<String, BigDecimal> examenes = new LinkedHashMap<>();
+        BigDecimal promedio = null;
         if (teccalDTO != null) {
+            promedio = new BigDecimal(0);
+            BigDecimal acumulado = new BigDecimal(0);
+            BigDecimal cantidad = new BigDecimal(0);
+            BigDecimal adicion = new BigDecimal(1);
             for (TecnologiaCalificacionDTO teccal : teccalDTO) {
-                examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+                if (teccal.getCalificacion() != null) {
+                    examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+                    acumulado = acumulado.add(teccal.getCalificacion());
+                    cantidad = cantidad.add(adicion);
+                }
+            }
+            if (cantidad.intValue() != 0) {
+                promedio = acumulado.divide(cantidad, 2, RoundingMode.DOWN);
             }
         }
 
