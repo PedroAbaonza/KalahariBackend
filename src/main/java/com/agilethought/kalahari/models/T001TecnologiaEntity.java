@@ -39,7 +39,7 @@ public class T001TecnologiaEntity {
     }
 
 
-    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t001TecnologiaByTecnologia")
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t001TecnologiaByTecnologia",  orphanRemoval = true)
     public List<T005PreguntaEntity> getPreguntas() {
         return preguntas;
     }

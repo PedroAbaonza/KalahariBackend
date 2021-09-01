@@ -36,7 +36,7 @@ public class T004TipoPreguntaEntity {
     }
 
     @JsonIgnore
-    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t004TipoPreguntaByTipo")
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t004TipoPreguntaByTipo",  orphanRemoval = true)
     public List<T005PreguntaEntity> getPreguntas() {
         return preguntas;
     }

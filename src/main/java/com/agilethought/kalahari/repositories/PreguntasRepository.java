@@ -23,4 +23,17 @@ public interface PreguntasRepository extends JpaRepository<T005PreguntaEntity, I
         "JOIN T005.t003IdiomaByIdioma T003 JOIN T005.t004TipoPreguntaByTipo T004")
         ArrayList<PreguntasResponse> listaPreguntas();
 
+        /**
+         *
+         * Obtenemos una lista de todas la preguntas las cuales no han sido asignadas a un tamplatePregunta
+         * @return  ArrayList<PreguntasResponse>
+         */
+        @Query("SELECT new com.agilethought.kalahari.dto.PreguntasResponse(T005.cdPregunta, T005.pregunta, T002.descripcion, " +
+                "T003.descripcion, T004.descripcion, T001.descripcion, T005.respuesta1, T005.respuesta2, " +
+                "T005.respuesta3, T005.respuesta4, T005.correcta1, T005.correcta2, T005.correcta3, T005.correcta4) " +
+                "FROM T005PreguntaEntity T005 JOIN T005.t001TecnologiaByTecnologia T001 JOIN T005.t002NivelByNivel T002 " +
+                "JOIN T005.t003IdiomaByIdioma T003 JOIN T005.t004TipoPreguntaByTipo T004 LEFT JOIN T005.t007TemplatePreguntaEntity T007 " +
+                "where T007.cdTemplatePregunta is null")
+        ArrayList<PreguntasResponse> listaPreguntasSinAsignar();
+
 }
