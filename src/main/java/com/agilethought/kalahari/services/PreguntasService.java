@@ -1,17 +1,15 @@
 package com.agilethought.kalahari.services;
 
 import com.agilethought.kalahari.dto.PreguntasResponse;
-import com.agilethought.kalahari.models.T001TecnologiaEntity;
 import com.agilethought.kalahari.models.T005PreguntaEntity;
 import com.agilethought.kalahari.repositories.PreguntasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PreguntasService {
@@ -28,6 +26,26 @@ public class PreguntasService {
         ArrayList<PreguntasResponse> lista = new ArrayList<>();
         lista = preguntasRepository.listaPreguntas();
         return lista;
+    }
+
+    /**
+     *
+     * Servicio para obtener la lista de preguntas sin asignar
+     * @return ArrayList<PreguntasResponse>
+     */
+    public ArrayList<PreguntasResponse> obtenerPreguntasSinAsignar(){
+        ArrayList<PreguntasResponse> lista = new ArrayList<>();
+        lista = preguntasRepository.listaPreguntasSinAsignar();
+        return lista;
+    }
+
+    /**
+     * Servicio para buscar una pregunta por id
+     * @param id
+     * @return Optional <T005PreguntaEntity>
+     */
+    public Optional <T005PreguntaEntity> obtenerPreguntaById(Integer id){
+        return preguntasRepository.findById(id);
     }
 
     /**

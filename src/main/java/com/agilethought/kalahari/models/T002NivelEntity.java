@@ -47,7 +47,7 @@ public class T002NivelEntity {
     }
 
     @JsonIgnore
-    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t002NivelByNivel")
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t002NivelByNivel",  orphanRemoval = true)
     public List<T005PreguntaEntity> getPreguntas() {
         return preguntas;
     }

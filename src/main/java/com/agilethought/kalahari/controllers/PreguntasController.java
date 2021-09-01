@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("preguntas")
@@ -24,6 +25,21 @@ public class PreguntasController {
     @GetMapping("lista")
     public @ResponseBody ArrayList<PreguntasResponse> obtenerPreguntas(){
         return preguntasService.obtenerPreguntas();
+    }
+
+    /**
+     *
+     * Obtenemos la lista de las preguntas sin asignar a un template
+     * @return ArrayList<PreguntasResponse>
+     */
+    @GetMapping("listaSinAsignar")
+    public @ResponseBody ArrayList<PreguntasResponse> obtenerPreguntasSinAsignar(){
+        return preguntasService.obtenerPreguntasSinAsignar();
+    }
+
+    @GetMapping("obtenerPregunta/{id}")
+    public @ResponseBody Optional<T005PreguntaEntity> obtenerPreguntaById(@PathVariable("id") Integer id){
+        return preguntasService.obtenerPreguntaById(id);
     }
 
     /**

@@ -56,7 +56,7 @@ public class T007TemplatePreguntaEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta", nullable = false)
+    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
     public T005PreguntaEntity getT005PreguntaByCdPregunta() {
         return t005PreguntaByCdPregunta;
     }

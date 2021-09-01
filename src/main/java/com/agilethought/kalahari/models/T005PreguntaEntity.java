@@ -31,8 +31,8 @@ public class T005PreguntaEntity {
     private T003IdiomaEntity t003IdiomaByIdioma;
     private T004TipoPreguntaEntity t004TipoPreguntaByTipo;
     //Se agrego este atributo para poder obtener la columna de tiempoRespuesta de la tabla TemplatePregunta
-    private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
-    private List<T007TemplatePreguntaEntity> preguntasTemplate;
+    //private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
+    private List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -250,21 +250,21 @@ public class T005PreguntaEntity {
     }
 
     @JsonIgnore
-    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
-    public List<T007TemplatePreguntaEntity> getTemplatePreguntas() {
-        return preguntasTemplate;
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta", orphanRemoval = true)
+    public List<T007TemplatePreguntaEntity> getT007TemplatePreguntaEntity() {
+        return t007TemplatePreguntaEntity;
     }
 
-    public void setTemplatePreguntas(List<T007TemplatePreguntaEntity> preguntasTemplate) {
-        this.preguntasTemplate = preguntasTemplate;
-    }
-    @OneToOne
-    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
+    public void setT007TemplatePreguntaEntity(List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity) {
+        this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
+    }/*
+    @OneToOne(mappedBy = "t005PreguntaByCdPregunta",  cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
     public T007TemplatePreguntaEntity getT007TemplatePreguntaEntity() {
         return t007TemplatePreguntaEntity;
     }
 
     public void setT007TemplatePreguntaEntity(T007TemplatePreguntaEntity t007TemplatePreguntaEntity) {
         this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
-    }
+    }*/
 }
