@@ -1,10 +1,12 @@
 package com.agilethought.kalahari.controllers;
 
+import com.agilethought.kalahari.dto.CandidatosResponse;
 import com.agilethought.kalahari.models.T014Candidato;
 import com.agilethought.kalahari.services.CandidatoService;
 import com.agilethought.kalahari.utils.FuncionesController;
 import com.agilethought.kalahari.utils.Textos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,12 @@ public class CandidatoController implements GenericoController<T014Candidato, St
     public String actualizar(T014Candidato object) {
         return FuncionesController.actualizar(candidatoService,object,Textos.Repositorios.Agregar.ERROR);
     }
-
-
+    @GetMapping("listaJoin")
+    public ArrayList<CandidatosResponse> listaJoinCandidatosGruposUniverisdades(){
+        try{
+            return candidatoService.listaJoinCandidatosGruposUniverisdades();
+        }catch (Exception e){
+            return null;
+        }
+    }
 }

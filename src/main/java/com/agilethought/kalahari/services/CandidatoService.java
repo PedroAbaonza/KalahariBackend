@@ -1,5 +1,6 @@
 package com.agilethought.kalahari.services;
 
+import com.agilethought.kalahari.dto.CandidatosResponse;
 import com.agilethought.kalahari.models.T014Candidato;
 import com.agilethought.kalahari.repositories.CandidatoRepository;
 import com.agilethought.kalahari.utils.FuncionesRepositorios;
@@ -30,5 +31,9 @@ public class CandidatoService implements GenericoService<T014Candidato, String, 
     @Override
     public String actualizar(T014Candidato object) throws Exception {
         return FuncionesRepositorios.actualizar(candidatoRepository, object, object.getCdCandidato());
+    }
+
+    public ArrayList<CandidatosResponse> listaJoinCandidatosGruposUniverisdades() throws Exception{
+        return candidatoRepository.listaJoinCandidatosGruposUniverisdades();
     }
 }
