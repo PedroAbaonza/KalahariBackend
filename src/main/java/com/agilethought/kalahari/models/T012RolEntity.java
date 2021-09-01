@@ -10,6 +10,7 @@ public class T012RolEntity {
     private String nombre;
     private String descripcion;
 
+
     @Id
     @Basic
     @Column(name = "id")

@@ -1,16 +1,22 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T004_TIPO_PREGUNTA")
+@Table(name = "T004_TIPO_PREGUNTA", schema = "kalahari", catalog = "")
 public class T004TipoPreguntaEntity {
     private int cdTipoPregunta;
     private String descripcion;
+    //****
+    private List<T005PreguntaEntity> preguntas;
 
     @Id
-    @Column(name = "cdTipoPregunta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdTipoPregunta", unique = true, nullable = false)
     public int getCdTipoPregunta() {
         return cdTipoPregunta;
     }
@@ -27,6 +33,16 @@ public class T004TipoPreguntaEntity {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @JsonIgnore
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t004TipoPreguntaByTipo")
+    public List<T005PreguntaEntity> getPreguntas() {
+        return preguntas;
+    }
+
+    public void setPreguntas(List<T005PreguntaEntity> preguntas) {
+        this.preguntas = preguntas;
     }
 
     @Override

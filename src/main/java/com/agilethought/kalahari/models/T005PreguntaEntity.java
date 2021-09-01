@@ -1,11 +1,14 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T005_PREGUNTA")
+@Table(name = "T005_PREGUNTA", schema = "kalahari", catalog = "")
 public class T005PreguntaEntity {
     private int cdPregunta;
     private String pregunta;
@@ -23,9 +26,17 @@ public class T005PreguntaEntity {
     private String autorizador;
     private Timestamp fhAutorizacion;
     private double rate;
+    private T001TecnologiaEntity t001TecnologiaByTecnologia;
+    private T002NivelEntity t002NivelByNivel;
+    private T003IdiomaEntity t003IdiomaByIdioma;
+    private T004TipoPreguntaEntity t004TipoPreguntaByTipo;
+    //Se agrego este atributo para poder obtener la columna de tiempoRespuesta de la tabla TemplatePregunta
+    private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
+    private List<T007TemplatePreguntaEntity> preguntasTemplate;
 
     @Id
-    @Column(name = "cdPregunta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdPregunta", unique = true, nullable = false)
     public int getCdPregunta() {
         return cdPregunta;
     }
@@ -195,5 +206,65 @@ public class T005PreguntaEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cdPregunta, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, correcta1, correcta2, correcta3, correcta4, explicacion, creador, fhCreacion, autorizador, fhAutorizacion, rate);
+    }
+
+    @ManyToOne()
+    @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia")
+    public T001TecnologiaEntity getT001TecnologiaByTecnologia() {
+        return t001TecnologiaByTecnologia;
+    }
+
+    public void setT001TecnologiaByTecnologia(T001TecnologiaEntity t001TecnologiaByTecnologia) {
+        this.t001TecnologiaByTecnologia = t001TecnologiaByTecnologia;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "nivel", referencedColumnName = "cdNivel")
+    public T002NivelEntity getT002NivelByNivel() {
+        return t002NivelByNivel;
+    }
+
+    public void setT002NivelByNivel(T002NivelEntity t002NivelByNivel) {
+        this.t002NivelByNivel = t002NivelByNivel;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "idioma", referencedColumnName = "cdIdioma")
+    public T003IdiomaEntity getT003IdiomaByIdioma() {
+        return t003IdiomaByIdioma;
+    }
+
+    public void setT003IdiomaByIdioma(T003IdiomaEntity t003IdiomaByIdioma) {
+        this.t003IdiomaByIdioma = t003IdiomaByIdioma;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tipo", referencedColumnName = "cdTipoPregunta")
+    public T004TipoPreguntaEntity getT004TipoPreguntaByTipo() {
+        return t004TipoPreguntaByTipo;
+    }
+
+    public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
+        this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
+    }
+
+    @JsonIgnore
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
+    public List<T007TemplatePreguntaEntity> getTemplatePreguntas() {
+        return preguntasTemplate;
+    }
+
+    public void setTemplatePreguntas(List<T007TemplatePreguntaEntity> preguntasTemplate) {
+        this.preguntasTemplate = preguntasTemplate;
+    }
+    @OneToOne
+    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
+    public T007TemplatePreguntaEntity getT007TemplatePreguntaEntity() {
+        return t007TemplatePreguntaEntity;
+    }
+
+    public void setT007TemplatePreguntaEntity(T007TemplatePreguntaEntity t007TemplatePreguntaEntity) {
+        this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
     }
 }

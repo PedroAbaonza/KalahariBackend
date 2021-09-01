@@ -1,14 +1,20 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T002_NIVEL")
+@Table(name = "T002_NIVEL", schema = "kalahari", catalog = "")
 public class T002NivelEntity {
     private int cdNivel;
     private String descripcion;
     private Integer puntaje;
+
+    //*************
+    private List<T005PreguntaEntity> preguntas;
 
     @Id
     @Column(name = "cdNivel")
@@ -38,6 +44,16 @@ public class T002NivelEntity {
 
     public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
+    }
+
+    @JsonIgnore
+    @OneToMany(targetEntity = T005PreguntaEntity.class, mappedBy = "t002NivelByNivel")
+    public List<T005PreguntaEntity> getPreguntas() {
+        return preguntas;
+    }
+
+    public void setPreguntas(List<T005PreguntaEntity> preguntas) {
+        this.preguntas = preguntas;
     }
 
     @Override

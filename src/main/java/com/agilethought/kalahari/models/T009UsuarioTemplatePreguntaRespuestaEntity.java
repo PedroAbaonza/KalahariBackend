@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T009_USUARIO_TEMPLATE_PREGUNTA_RESPUESTA")
+@Table(name = "T009_USUARIO_TEMPLATE_PREGUNTA_RESPUESTA", schema = "kalahari", catalog = "")
 public class T009UsuarioTemplatePreguntaRespuestaEntity {
     private int cdUsuarioTemplateRespuesta;
     private Integer seleccion1;
@@ -16,9 +16,13 @@ public class T009UsuarioTemplatePreguntaRespuestaEntity {
     private Integer tiempoTomado;
     private String trackOpcion;
     private Timestamp fechaCreacion;
+    private T000UsuariosEntity t000UsuariosByUsuarioToken;
+    private T006TemplateEntity t006TemplateByCdTemplate;
+    private T005PreguntaEntity t005PreguntaByCdPregunta;
 
     @Id
-    @Column(name = "cdUsuarioTemplateRespuesta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cdUsuarioTemplateRespuesta", unique = true, nullable = false)
     public int getCdUsuarioTemplateRespuesta() {
         return cdUsuarioTemplateRespuesta;
     }
@@ -118,5 +122,35 @@ public class T009UsuarioTemplatePreguntaRespuestaEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cdUsuarioTemplateRespuesta, seleccion1, seleccion2, seleccion3, seleccion4, punto, tiempoTomado, trackOpcion, fechaCreacion);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "usuarioToken", referencedColumnName = "usuarioToken")
+    public T000UsuariosEntity getT000UsuariosByUsuarioToken() {
+        return t000UsuariosByUsuarioToken;
+    }
+
+    public void setT000UsuariosByUsuarioToken(T000UsuariosEntity t000UsuariosByUsuarioToken) {
+        this.t000UsuariosByUsuarioToken = t000UsuariosByUsuarioToken;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "cdTemplate", referencedColumnName = "cdTemplate")
+    public T006TemplateEntity getT006TemplateByCdTemplate() {
+        return t006TemplateByCdTemplate;
+    }
+
+    public void setT006TemplateByCdTemplate(T006TemplateEntity t006TemplateByCdTemplate) {
+        this.t006TemplateByCdTemplate = t006TemplateByCdTemplate;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
+    public T005PreguntaEntity getT005PreguntaByCdPregunta() {
+        return t005PreguntaByCdPregunta;
+    }
+
+    public void setT005PreguntaByCdPregunta(T005PreguntaEntity t005PreguntaByCdPregunta) {
+        this.t005PreguntaByCdPregunta = t005PreguntaByCdPregunta;
     }
 }

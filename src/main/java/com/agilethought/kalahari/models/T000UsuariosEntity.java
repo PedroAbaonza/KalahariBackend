@@ -5,14 +5,15 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T000_USUARIOS")
+@Table(name = "T000_USUARIOS", schema = "kalahari", catalog = "")
 public class T000UsuariosEntity {
     private String usuarioToken;
     private String notificacionToken;
     private String nombre;
     private String email;
     private Timestamp fhRegistro;
-    private Integer grupo;
+    private T011GrupoEntity t011GrupoByGrupo;
+    private T010UniversidadEntity t010UniversidadByUniversidad;
 
     @Id
     @Column(name = "usuarioToken")
@@ -64,14 +65,22 @@ public class T000UsuariosEntity {
         this.fhRegistro = fhRegistro;
     }
 
-    @Basic
-    @Column(name = "grupo")
-    public Integer getGrupo() {
-        return grupo;
+    @ManyToOne
+    @JoinColumn(name = "grupo", referencedColumnName = "cdGrupo", nullable = false)
+    public T011GrupoEntity getT011GrupoByGrupo() { return t011GrupoByGrupo; };
+
+    public void setT011GrupoByGrupo(T011GrupoEntity t011GrupoByGrupo) {
+        this.t011GrupoByGrupo = t011GrupoByGrupo;
     }
 
-    public void setGrupo(Integer grupo) {
-        this.grupo = grupo;
+    @ManyToOne
+    @JoinColumn(name = "universidad", referencedColumnName = "cdUniversidad", nullable = false)
+    public T010UniversidadEntity getT010UniversidadByUniversidad() {
+        return t010UniversidadByUniversidad;
+    }
+
+    public void setT010UniversidadByUniversidad(T010UniversidadEntity t010UniversidadByUniversidad) {
+        this.t010UniversidadByUniversidad = t010UniversidadByUniversidad;
     }
 
     @Override
@@ -79,11 +88,11 @@ public class T000UsuariosEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         T000UsuariosEntity that = (T000UsuariosEntity) o;
-        return Objects.equals(usuarioToken, that.usuarioToken) && Objects.equals(notificacionToken, that.notificacionToken) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(fhRegistro, that.fhRegistro) && Objects.equals(grupo, that.grupo);
+        return Objects.equals(usuarioToken, that.usuarioToken) && Objects.equals(notificacionToken, that.notificacionToken) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(fhRegistro, that.fhRegistro) && Objects.equals(t011GrupoByGrupo, that.t011GrupoByGrupo) && Objects.equals(t010UniversidadByUniversidad, that.t010UniversidadByUniversidad);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(usuarioToken, notificacionToken, nombre, email, fhRegistro, grupo);
+        return Objects.hash(usuarioToken, notificacionToken, nombre, email, fhRegistro, t011GrupoByGrupo, t010UniversidadByUniversidad);
     }
 }
