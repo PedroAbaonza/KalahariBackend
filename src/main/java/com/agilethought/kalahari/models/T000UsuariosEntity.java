@@ -1,8 +1,17 @@
 package com.agilethought.kalahari.models;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "T000_USUARIOS", schema = "kalahari", catalog = "")
@@ -66,8 +75,11 @@ public class T000UsuariosEntity {
     }
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "grupo", referencedColumnName = "cdGrupo", nullable = false)
-    public T011GrupoEntity getT011GrupoByGrupo() { return t011GrupoByGrupo; };
+    public T011GrupoEntity getT011GrupoByGrupo() {
+        return t011GrupoByGrupo;
+    };
 
     public void setT011GrupoByGrupo(T011GrupoEntity t011GrupoByGrupo) {
         this.t011GrupoByGrupo = t011GrupoByGrupo;
@@ -85,14 +97,21 @@ public class T000UsuariosEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         T000UsuariosEntity that = (T000UsuariosEntity) o;
-        return Objects.equals(usuarioToken, that.usuarioToken) && Objects.equals(notificacionToken, that.notificacionToken) && Objects.equals(nombre, that.nombre) && Objects.equals(email, that.email) && Objects.equals(fhRegistro, that.fhRegistro) && Objects.equals(t011GrupoByGrupo, that.t011GrupoByGrupo) && Objects.equals(t010UniversidadByUniversidad, that.t010UniversidadByUniversidad);
+        return Objects.equals(usuarioToken, that.usuarioToken)
+                && Objects.equals(notificacionToken, that.notificacionToken) && Objects.equals(nombre, that.nombre)
+                && Objects.equals(email, that.email) && Objects.equals(fhRegistro, that.fhRegistro)
+                && Objects.equals(t011GrupoByGrupo, that.t011GrupoByGrupo)
+                && Objects.equals(t010UniversidadByUniversidad, that.t010UniversidadByUniversidad);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(usuarioToken, notificacionToken, nombre, email, fhRegistro, t011GrupoByGrupo, t010UniversidadByUniversidad);
+        return Objects.hash(usuarioToken, notificacionToken, nombre, email, fhRegistro, t011GrupoByGrupo,
+                t010UniversidadByUniversidad);
     }
 }
