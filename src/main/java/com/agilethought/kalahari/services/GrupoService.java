@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,6 +29,10 @@ public class GrupoService {
         return (ArrayList<T011GrupoEntity>) grupoRepository.findAll();
     }
 
+    public ArrayList<T011GrupoEntity> obtenerGruposOrderedByFechaAplicacion(){
+        return (ArrayList<T011GrupoEntity>) grupoRepository.obtenerGruposOrderedByFechaAplicacion();
+    }
+  
     public T011GrupoEntity guardarGrupo(T011GrupoEntity t011Grupo) {
         return grupoRepository.save(t011Grupo);
     }
@@ -70,14 +75,25 @@ public class GrupoService {
     public ArrayList<CalificacionesPorGrupoDTO> obtenerCalificaciones(Integer grupo) {
         ArrayList<V002UsuariosPorGrupoEntity> usuariosPorGrupo = obtenerUsuariosPorGrupo(grupo);
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
+        Collections.reverse(calificacionesPorGrupo);
 
         MultiValueMap<String, TecnologiaCalificacionDTO> teccalPorUsuario = new LinkedMultiValueMap<>();
+        MultiValueMap<String, String> techsPorUsuario = new LinkedMultiValueMap<>();
 
         for (V003CalificacionesPorGrupoEntity teccal : calificacionesPorGrupo) {
-            teccalPorUsuario.add(teccal.getUsuarioToken(), new TecnologiaCalificacionDTO(
-                    teccal.getTecnologia(),
-                    teccal.getCalificacion()
-            ));
+            if (techsPorUsuario.get(teccal.getUsuarioToken()) == null) {
+                teccalPorUsuario.add(teccal.getUsuarioToken(), new TecnologiaCalificacionDTO(
+                        teccal.getTecnologia(),
+                        teccal.getCalificacion()
+                ));
+                techsPorUsuario.add(teccal.getUsuarioToken(), teccal.getTecnologia());
+            } else if (!techsPorUsuario.get(teccal.getUsuarioToken()).contains(teccal.getTecnologia())) {
+                teccalPorUsuario.add(teccal.getUsuarioToken(), new TecnologiaCalificacionDTO(
+                        teccal.getTecnologia(),
+                        teccal.getCalificacion()
+                ));
+                techsPorUsuario.add(teccal.getUsuarioToken(), teccal.getTecnologia());
+            }
         }
 
         ArrayList<CalificacionesPorGrupoDTO> calificaciones = new ArrayList<>();
@@ -86,14 +102,28 @@ public class GrupoService {
             String usuarioToken = usuario.getUsuarioToken();
             String nombre = usuario.getNombre();
             String universidad = usuario.getUniversidad();
-            BigDecimal promedio = usuario.getPromedio();
             Date fecha = usuario.getFecha();
 
-            List<TecnologiaCalificacionDTO> teccalDTO = teccalPorUsuario.get(usuarioToken);
+            List<TecnologiaCalificacionDTO> teccalDeUsuario = teccalPorUsuario.get(usuarioToken);
             Map<String, BigDecimal> examenes = new LinkedHashMap<>();
-            if (teccalDTO != null) {
-                for (TecnologiaCalificacionDTO teccal : teccalDTO) {
-                    examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+            BigDecimal promedio = null;
+            if (teccalDeUsuario != null) {
+                promedio = new BigDecimal(0);
+                BigDecimal acumulado = new BigDecimal(0);
+                BigDecimal cantidad = new BigDecimal(0);
+                BigDecimal adicion = new BigDecimal(1);
+                for (TecnologiaCalificacionDTO teccal : teccalDeUsuario) {
+                    if (teccal.getCalificacion() != null) {
+                        if (usuarioToken.equals("COfJe2JXEGP8mJTf7QNH75IeuLz2")) {
+                            System.out.printf("%f\n", teccal.getCalificacion());
+                        }
+                        examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+                        acumulado = acumulado.add(teccal.getCalificacion());
+                        cantidad = cantidad.add(adicion);
+                    }
+                }
+                if (cantidad.intValue() != 0) {
+                    promedio = acumulado.divide(cantidad, 2, RoundingMode.DOWN);
                 }
             }
             calificaciones.add(new CalificacionesPorGrupoDTO(usuarioToken, nombre, universidad, examenes, promedio, fecha));
@@ -102,45 +132,61 @@ public class GrupoService {
         return calificaciones;
     }
 
-    public String[] obtenerTecnologias(Integer grupo) {
+    public Map<String, Integer> obtenerTecnologias(Integer grupo) {
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
 
-        HashSet<String> tecnologias = new HashSet<>();
+        Map<String, Integer> tecnologias = new HashMap<>();
 
         for (V003CalificacionesPorGrupoEntity calificacion : calificacionesPorGrupo) {
-            tecnologias.add(calificacion.getTecnologia());
+            tecnologias.put(calificacion.getTecnologia(), calificacion.getCdTemplate());
         }
 
-        return tecnologias.toArray(new String[0]);
+        return tecnologias;
     }
 
     public Optional<CalificacionesPorGrupoDTO> obtenerCalificaciones(String token) {
         Optional<V002UsuariosPorGrupoEntity> usuarioPorToken = obtenerUsuarioPorToken(token);
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorToken = obtenerCalificacionPorToken(token);
+        Collections.reverse(calificacionesPorToken);
 
         if (!usuarioPorToken.isPresent()) {
             return null;
         }
 
-        ArrayList<TecnologiaCalificacionDTO> teccalDTO = new ArrayList<>();
+        List<TecnologiaCalificacionDTO> teccalDeUsuario = new ArrayList<>();
+        Set<String> techsDeUsuario = new HashSet<>();
 
         for (V003CalificacionesPorGrupoEntity teccal : calificacionesPorToken) {
-            teccalDTO.add(new TecnologiaCalificacionDTO(
-                    teccal.getTecnologia(),
-                    teccal.getCalificacion()
-            ));
+            if (!techsDeUsuario.contains(teccal.getTecnologia())) {
+                teccalDeUsuario.add(new TecnologiaCalificacionDTO(
+                        teccal.getTecnologia(),
+                        teccal.getCalificacion()
+                ));
+                techsDeUsuario.add(teccal.getTecnologia());
+            }
         }
 
         String usuarioToken = usuarioPorToken.get().getUsuarioToken();
         String nombre = usuarioPorToken.get().getNombre();
         String universidad = usuarioPorToken.get().getUniversidad();
-        BigDecimal promedio = usuarioPorToken.get().getPromedio();
         Date fecha = usuarioPorToken.get().getFecha();
 
         Map<String, BigDecimal> examenes = new LinkedHashMap<>();
-        if (teccalDTO != null) {
-            for (TecnologiaCalificacionDTO teccal : teccalDTO) {
-                examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+        BigDecimal promedio = null;
+        if (teccalDeUsuario != null) {
+            promedio = new BigDecimal(0);
+            BigDecimal acumulado = new BigDecimal(0);
+            BigDecimal cantidad = new BigDecimal(0);
+            BigDecimal adicion = new BigDecimal(1);
+            for (TecnologiaCalificacionDTO teccal : teccalDeUsuario) {
+                if (teccal.getCalificacion() != null) {
+                    examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
+                    acumulado = acumulado.add(teccal.getCalificacion());
+                    cantidad = cantidad.add(adicion);
+                }
+            }
+            if (cantidad.intValue() != 0) {
+                promedio = acumulado.divide(cantidad, 2, RoundingMode.DOWN);
             }
         }
 
