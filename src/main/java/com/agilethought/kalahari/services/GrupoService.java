@@ -75,14 +75,25 @@ public class GrupoService {
     public ArrayList<CalificacionesPorGrupoDTO> obtenerCalificaciones(Integer grupo) {
         ArrayList<V002UsuariosPorGrupoEntity> usuariosPorGrupo = obtenerUsuariosPorGrupo(grupo);
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
+        Collections.reverse(calificacionesPorGrupo);
 
         MultiValueMap<String, TecnologiaCalificacionDTO> teccalPorUsuario = new LinkedMultiValueMap<>();
+        MultiValueMap<String, String> techsPorUsuario = new LinkedMultiValueMap<>();
 
         for (V003CalificacionesPorGrupoEntity teccal : calificacionesPorGrupo) {
-            teccalPorUsuario.add(teccal.getUsuarioToken(), new TecnologiaCalificacionDTO(
-                    teccal.getTecnologia(),
-                    teccal.getCalificacion()
-            ));
+            if (techsPorUsuario.get(teccal.getUsuarioToken()) == null) {
+                teccalPorUsuario.add(teccal.getUsuarioToken(), new TecnologiaCalificacionDTO(
+                        teccal.getTecnologia(),
+                        teccal.getCalificacion()
+                ));
+                techsPorUsuario.add(teccal.getUsuarioToken(), teccal.getTecnologia());
+            } else if (!techsPorUsuario.get(teccal.getUsuarioToken()).contains(teccal.getTecnologia())) {
+                teccalPorUsuario.add(teccal.getUsuarioToken(), new TecnologiaCalificacionDTO(
+                        teccal.getTecnologia(),
+                        teccal.getCalificacion()
+                ));
+                techsPorUsuario.add(teccal.getUsuarioToken(), teccal.getTecnologia());
+            }
         }
 
         ArrayList<CalificacionesPorGrupoDTO> calificaciones = new ArrayList<>();
@@ -93,16 +104,19 @@ public class GrupoService {
             String universidad = usuario.getUniversidad();
             Date fecha = usuario.getFecha();
 
-            List<TecnologiaCalificacionDTO> teccalDTO = teccalPorUsuario.get(usuarioToken);
+            List<TecnologiaCalificacionDTO> teccalDeUsuario = teccalPorUsuario.get(usuarioToken);
             Map<String, BigDecimal> examenes = new LinkedHashMap<>();
             BigDecimal promedio = null;
-            if (teccalDTO != null) {
+            if (teccalDeUsuario != null) {
                 promedio = new BigDecimal(0);
                 BigDecimal acumulado = new BigDecimal(0);
                 BigDecimal cantidad = new BigDecimal(0);
                 BigDecimal adicion = new BigDecimal(1);
-                for (TecnologiaCalificacionDTO teccal : teccalDTO) {
+                for (TecnologiaCalificacionDTO teccal : teccalDeUsuario) {
                     if (teccal.getCalificacion() != null) {
+                        if (usuarioToken.equals("COfJe2JXEGP8mJTf7QNH75IeuLz2")) {
+                            System.out.printf("%f\n", teccal.getCalificacion());
+                        }
                         examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
                         acumulado = acumulado.add(teccal.getCalificacion());
                         cantidad = cantidad.add(adicion);
@@ -133,18 +147,23 @@ public class GrupoService {
     public Optional<CalificacionesPorGrupoDTO> obtenerCalificaciones(String token) {
         Optional<V002UsuariosPorGrupoEntity> usuarioPorToken = obtenerUsuarioPorToken(token);
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorToken = obtenerCalificacionPorToken(token);
+        Collections.reverse(calificacionesPorToken);
 
         if (!usuarioPorToken.isPresent()) {
             return null;
         }
 
-        ArrayList<TecnologiaCalificacionDTO> teccalDTO = new ArrayList<>();
+        List<TecnologiaCalificacionDTO> teccalDeUsuario = new ArrayList<>();
+        Set<String> techsDeUsuario = new HashSet<>();
 
         for (V003CalificacionesPorGrupoEntity teccal : calificacionesPorToken) {
-            teccalDTO.add(new TecnologiaCalificacionDTO(
-                    teccal.getTecnologia(),
-                    teccal.getCalificacion()
-            ));
+            if (!techsDeUsuario.contains(teccal.getTecnologia())) {
+                teccalDeUsuario.add(new TecnologiaCalificacionDTO(
+                        teccal.getTecnologia(),
+                        teccal.getCalificacion()
+                ));
+                techsDeUsuario.add(teccal.getTecnologia());
+            }
         }
 
         String usuarioToken = usuarioPorToken.get().getUsuarioToken();
@@ -154,12 +173,12 @@ public class GrupoService {
 
         Map<String, BigDecimal> examenes = new LinkedHashMap<>();
         BigDecimal promedio = null;
-        if (teccalDTO != null) {
+        if (teccalDeUsuario != null) {
             promedio = new BigDecimal(0);
             BigDecimal acumulado = new BigDecimal(0);
             BigDecimal cantidad = new BigDecimal(0);
             BigDecimal adicion = new BigDecimal(1);
-            for (TecnologiaCalificacionDTO teccal : teccalDTO) {
+            for (TecnologiaCalificacionDTO teccal : teccalDeUsuario) {
                 if (teccal.getCalificacion() != null) {
                     examenes.put(teccal.getTecnologia(), teccal.getCalificacion());
                     acumulado = acumulado.add(teccal.getCalificacion());
