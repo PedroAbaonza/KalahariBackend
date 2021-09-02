@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class CandidatoService implements GenericoService<T014Candidato, String, String> {
+public class CandidatoService implements GenericoService<T014Candidato, String, Integer> {
     @Autowired
     CandidatoRepository candidatoRepository;
     @Override
@@ -24,7 +24,7 @@ public class CandidatoService implements GenericoService<T014Candidato, String, 
     }
 
     @Override
-    public String eliminar(String id) throws Exception {
+    public String eliminar(Integer id) throws Exception {
         return FuncionesRepositorios.eliminar(candidatoRepository,id);
     }
 

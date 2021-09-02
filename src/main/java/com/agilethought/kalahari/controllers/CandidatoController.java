@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("Candidatos")
-public class CandidatoController implements GenericoController<T014Candidato, String,String>{
+public class CandidatoController implements GenericoController<T014Candidato, String,Integer>{
     @Autowired
     CandidatoService candidatoService;
 
@@ -30,13 +30,14 @@ public class CandidatoController implements GenericoController<T014Candidato, St
     }
 
     @Override
-    public String eliminar(String id) {
-        return FuncionesController.eliminar(candidatoService,id,Textos.Repositorios.Agregar.ERROR);
+    public String eliminar(Integer id) {
+        return FuncionesController.eliminar(candidatoService,id,Textos.Repositorios.Eliminar.ERROR);
+
     }
 
     @Override
     public String actualizar(T014Candidato object) {
-        return FuncionesController.actualizar(candidatoService,object,Textos.Repositorios.Agregar.ERROR);
+        return FuncionesController.actualizar(candidatoService,object,Textos.Repositorios.Actualizar.ERROR);
     }
     @GetMapping("listaJoin")
     public ArrayList<CandidatosResponse> listaJoinCandidatosGruposUniverisdades(){
