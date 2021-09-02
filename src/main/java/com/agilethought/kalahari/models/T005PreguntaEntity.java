@@ -248,23 +248,13 @@ public class T005PreguntaEntity {
     public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
         this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
     }
-
     @JsonIgnore
-    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta", orphanRemoval = true)
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
     public List<T007TemplatePreguntaEntity> getT007TemplatePreguntaEntity() {
         return t007TemplatePreguntaEntity;
     }
 
     public void setT007TemplatePreguntaEntity(List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity) {
         this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
-    }/*
-    @OneToOne(mappedBy = "t005PreguntaByCdPregunta",  cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JoinColumn(name = "cdPregunta", referencedColumnName = "cdPregunta")
-    public T007TemplatePreguntaEntity getT007TemplatePreguntaEntity() {
-        return t007TemplatePreguntaEntity;
     }
-
-    public void setT007TemplatePreguntaEntity(T007TemplatePreguntaEntity t007TemplatePreguntaEntity) {
-        this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
-    }*/
 }
