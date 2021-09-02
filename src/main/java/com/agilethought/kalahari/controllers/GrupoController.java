@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -66,7 +67,7 @@ public class GrupoController {
     }
     
     @GetMapping(path = "/tecnologias/{cdGrupo}")
-    public String[] obtenerTecnologias(@PathVariable("cdGrupo") Integer cdGrupo) {
+    public Map<String, Integer> obtenerTecnologias(@PathVariable("cdGrupo") Integer cdGrupo) {
         return this.grupoService.obtenerTecnologias(cdGrupo);
     }
 

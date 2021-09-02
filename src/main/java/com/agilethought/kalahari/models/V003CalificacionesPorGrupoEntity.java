@@ -17,6 +17,7 @@ public class V003CalificacionesPorGrupoEntity {
     private String usuarioToken;
     private int grupo;
     private String nombre;
+    private int cdTemplate;
     private String tecnologia;
     private BigDecimal calificacion;
 
@@ -54,6 +55,16 @@ public class V003CalificacionesPorGrupoEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Basic
+    @Column(name = "cdTemplate")
+    public int getCdTemplate() {
+        return cdTemplate;
+    }
+
+    public void setCdTemplate(int cdTemplate) {
+        this.cdTemplate = cdTemplate;
     }
 
     @Basic
