@@ -31,7 +31,7 @@ public class GrupoService {
     public ArrayList<T011GrupoEntity> obtenerGruposOrderedByFechaAplicacion(){
         return (ArrayList<T011GrupoEntity>) grupoRepository.obtenerGruposOrderedByFechaAplicacion();
     }
-
+  
     public T011GrupoEntity guardarGrupo(T011GrupoEntity t011Grupo) {
         return grupoRepository.save(t011Grupo);
     }
