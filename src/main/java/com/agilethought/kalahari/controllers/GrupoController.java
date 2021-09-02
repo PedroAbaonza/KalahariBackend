@@ -8,6 +8,7 @@ import com.agilethought.kalahari.services.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -21,6 +22,11 @@ public class GrupoController {
     @GetMapping("")
     public ArrayList<T011GrupoEntity> obtenerGrupos() {
         return grupoService.obtenerGrupos();
+    }
+
+    @GetMapping("/gruposOrdered")
+    public ArrayList<T011GrupoEntity> obtenerGruposOrdered(){
+        return grupoService.obtenerGruposOrderedByFechaAplicacion();
     }
 
     @PostMapping()
@@ -62,5 +68,10 @@ public class GrupoController {
     @GetMapping(path = "/tecnologias/{cdGrupo}")
     public String[] obtenerTecnologias(@PathVariable("cdGrupo") Integer cdGrupo) {
         return this.grupoService.obtenerTecnologias(cdGrupo);
+    }
+
+    @GetMapping(path = "/calificaciones/{cdGrupo}/{cdToken}")
+    public Optional<CalificacionesPorGrupoDTO> obtenerCalificaciones(@PathVariable("cdGrupo") Integer cdGrupo, @PathVariable("cdToken") String cdToken) {
+        return this.grupoService.obtenerCalificaciones(cdToken);
     }
 }
