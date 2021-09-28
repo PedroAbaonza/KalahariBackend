@@ -6,6 +6,7 @@ import com.agilethought.kalahari.repositories.ExamenTecnologiaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,5 +31,10 @@ public class ExamenTecnologiaController {
         return lst;
     }
 
+    @GetMapping("/resultados/{cdTecnologia}")
+    public @ResponseBody List<V004ExamenPorTecnologiaEntity> getExamenTecnologia(@PathVariable("cdTecnologia") Integer cdTecnologia) {
+        List<V004ExamenPorTecnologiaEntity> lst = examenTecnologiaRepository.getExamenTecnologia(cdTecnologia);
+        return lst;
+    }
 }
 
