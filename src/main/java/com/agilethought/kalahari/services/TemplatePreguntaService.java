@@ -1,9 +1,7 @@
 package com.agilethought.kalahari.services;
 
-import com.agilethought.kalahari.models.T006TemplateEntity;
 import com.agilethought.kalahari.models.T007TemplatePreguntaEntity;
 import com.agilethought.kalahari.repositories.TemplatePreguntaRepository;
-import com.agilethought.kalahari.repositories.TemplateRepository;
 import com.agilethought.kalahari.utils.FuncionesRepositorios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +30,9 @@ public class TemplatePreguntaService implements GenericoService<T007TemplatePreg
     @Override
     public String actualizar(T007TemplatePreguntaEntity object) throws Exception {
         return FuncionesRepositorios.actualizar(templatePreguntaRepository, object, object.getCdTemplatePregunta());
+    }
+
+    public ArrayList<String> getPreguntas(int cd){
+        return templatePreguntaRepository.getPreguntas(cd);
     }
 }
