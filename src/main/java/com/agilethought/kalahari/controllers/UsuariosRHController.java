@@ -6,6 +6,7 @@ import com.agilethought.kalahari.services.UsuarioRHService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PostUpdate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -27,4 +28,22 @@ public class UsuariosRHController {
     public String agregarUsuario(@RequestBody T013UsuariosRH t013UsuariosRH){
         return usuarioRHService.agregarUsuarioRH(t013UsuariosRH);
     }
+    @GetMapping("/getusuario/{email}")
+    public T013UsuariosRH obtenerUsuariorhemail(@PathVariable String email){
+        return usuarioRHService.obtenerPoremail(email);
+    }
+    @PutMapping("/intento/{email}")
+    public String aumentocont(@PathVariable String email){
+        return usuarioRHService.aumentoCount(email);
+    }
+    @PutMapping("/bloqueo/{email}")
+    public  String disableUsuario(@PathVariable String email){
+        return  usuarioRHService.disableUsuariorh(email);
+    }
+    @PutMapping("/default/{email}")
+    public  String enableUsuario(@PathVariable String email){
+        return  usuarioRHService.enableUsuariorh(email);
+    }
+
+
 }
