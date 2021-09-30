@@ -27,6 +27,6 @@ public interface UsuarioRHRepository extends CrudRepository <T013UsuariosRH, Str
 
     @Modifying
     @Query(nativeQuery = true,
-            value = "UPDATE T013_USUARIOS_RH SET fecha_bloqueo = null , disabled = 0 WHERE email = :email")
+            value = "UPDATE T013_USUARIOS_RH SET fecha_bloqueo = null, intentos_fail = 0, disabled = 0 WHERE email = :email")
     void enableUsuariorh(@Param("email") String email);
 }
