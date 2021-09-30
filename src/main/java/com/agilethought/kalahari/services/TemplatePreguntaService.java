@@ -33,6 +33,9 @@ public class TemplatePreguntaService implements GenericoService<T007TemplatePreg
     }
 
     public ArrayList<String> getPreguntas(int cd){
-        return templatePreguntaRepository.getPreguntas(cd);
+        ArrayList<String> lista = templatePreguntaRepository.getPreguntas(cd);
+        if(lista.isEmpty())
+            lista.add("Sin preguntas");
+        return lista;
     }
 }

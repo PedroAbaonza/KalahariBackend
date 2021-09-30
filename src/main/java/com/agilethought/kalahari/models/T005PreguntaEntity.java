@@ -248,8 +248,9 @@ public class T005PreguntaEntity {
     public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
         this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
     }
+
     @JsonIgnore
-    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class,  mappedBy = "t005PreguntaByCdPregunta")
     public List<T007TemplatePreguntaEntity> getT007TemplatePreguntaEntity() {
         return t007TemplatePreguntaEntity;
     }
