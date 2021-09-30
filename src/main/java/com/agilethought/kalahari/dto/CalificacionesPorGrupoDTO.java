@@ -8,14 +8,16 @@ import java.util.*;
 
 public class CalificacionesPorGrupoDTO {
     private String usuarioToken;
+    private String email;
     private String nombre;
     private String universidad;
-    private Map<String, BigDecimal> examenes = new LinkedHashMap<>();
+    private Map<String, BigDecimal> examenes;
     private BigDecimal promedio;
     private Date fecha;
 
-    public CalificacionesPorGrupoDTO(String usuarioToken, String nombre, String universidad, Map<String, BigDecimal> examenes, BigDecimal promedio, Date fecha) {
+    public CalificacionesPorGrupoDTO(String usuarioToken, String email, String nombre, String universidad, Map<String, BigDecimal> examenes, BigDecimal promedio, Date fecha) {
         this.usuarioToken = usuarioToken;
+        this.email = email;
         this.nombre = nombre;
         this.universidad = universidad;
         this.examenes = examenes;
@@ -29,6 +31,14 @@ public class CalificacionesPorGrupoDTO {
 
     public void setUsuarioToken(String usuarioToken) {
         this.usuarioToken = usuarioToken;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNombre() {

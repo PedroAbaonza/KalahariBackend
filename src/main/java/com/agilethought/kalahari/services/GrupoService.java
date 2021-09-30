@@ -72,6 +72,18 @@ public class GrupoService {
         return (ArrayList<V003CalificacionesPorGrupoEntity>) calificacionesPorGrupoRepository.encontrarPorToken(token);
     }
 
+    public Map<String, Integer> obtenerTecnologias(Integer grupo) {
+        ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
+
+        Map<String, Integer> tecnologias = new HashMap<>();
+
+        for (V003CalificacionesPorGrupoEntity calificacion : calificacionesPorGrupo) {
+            tecnologias.put(calificacion.getTecnologia(), calificacion.getCdTemplate());
+        }
+
+        return tecnologias;
+    }
+
     public ArrayList<CalificacionesPorGrupoDTO> obtenerCalificaciones(Integer grupo) {
         ArrayList<V002UsuariosPorGrupoEntity> usuariosPorGrupo = obtenerUsuariosPorGrupo(grupo);
         ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
@@ -100,6 +112,7 @@ public class GrupoService {
 
         for (V002UsuariosPorGrupoEntity usuario : usuariosPorGrupo) {
             String usuarioToken = usuario.getUsuarioToken();
+            String email = usuario.getEmail();
             String nombre = usuario.getNombre();
             String universidad = usuario.getUniversidad();
             Date fecha = usuario.getFecha();
@@ -126,22 +139,10 @@ public class GrupoService {
                     promedio = acumulado.divide(cantidad, 2, RoundingMode.DOWN);
                 }
             }
-            calificaciones.add(new CalificacionesPorGrupoDTO(usuarioToken, nombre, universidad, examenes, promedio, fecha));
+            calificaciones.add(new CalificacionesPorGrupoDTO(usuarioToken, email, nombre, universidad, examenes, promedio, fecha));
         }
 
         return calificaciones;
-    }
-
-    public Map<String, Integer> obtenerTecnologias(Integer grupo) {
-        ArrayList<V003CalificacionesPorGrupoEntity> calificacionesPorGrupo = obtenerCalificacionesPorGrupo(grupo);
-
-        Map<String, Integer> tecnologias = new HashMap<>();
-
-        for (V003CalificacionesPorGrupoEntity calificacion : calificacionesPorGrupo) {
-            tecnologias.put(calificacion.getTecnologia(), calificacion.getCdTemplate());
-        }
-
-        return tecnologias;
     }
 
     public Optional<CalificacionesPorGrupoDTO> obtenerCalificaciones(String token) {
@@ -167,6 +168,7 @@ public class GrupoService {
         }
 
         String usuarioToken = usuarioPorToken.get().getUsuarioToken();
+        String email = usuarioPorToken.get().getEmail();
         String nombre = usuarioPorToken.get().getNombre();
         String universidad = usuarioPorToken.get().getUniversidad();
         Date fecha = usuarioPorToken.get().getFecha();
@@ -190,6 +192,6 @@ public class GrupoService {
             }
         }
 
-        return Optional.of(new CalificacionesPorGrupoDTO(usuarioToken, nombre, universidad, examenes, promedio, fecha));
+        return Optional.of(new CalificacionesPorGrupoDTO(usuarioToken, email, nombre, universidad, examenes, promedio, fecha));
     }
 }
