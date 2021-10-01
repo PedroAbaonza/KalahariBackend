@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TemplatePreguntaService implements GenericoService<T007TemplatePreguntaEntity, String, Integer>{
@@ -37,5 +38,9 @@ public class TemplatePreguntaService implements GenericoService<T007TemplatePreg
         if(lista.isEmpty())
             lista.add("Sin preguntas");
         return lista;
+    }
+
+    public List<?> getPreguntasSinTemplate(int cd){
+        return templatePreguntaRepository.getPreguntasSinTemplate(cd);
     }
 }

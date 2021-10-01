@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("templatePregunta")
@@ -40,5 +41,10 @@ public class TemplatePreguntaController implements GenericoController<T007Templa
     @GetMapping("listaPreguntas/{id}")
     public @ResponseBody ArrayList<String> getPreguntas(@PathVariable("id") Integer cd){
         return templatePreguntaService.getPreguntas(cd);
+    }
+
+    @GetMapping("preguntasPorAsignar/{id}")
+    public @ResponseBody List<?> getPreguntasSinTemplate(@PathVariable("id") Integer cd){
+        return templatePreguntaService.getPreguntasSinTemplate(cd);
     }
 }
