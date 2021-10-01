@@ -15,6 +15,7 @@ import java.util.Date;
 public class V002UsuariosPorGrupoEntity {
     private String usuarioToken;
     private int grupo;
+    private String email;
     private String nombre;
     private String universidad;
     private Date fecha;
@@ -37,6 +38,16 @@ public class V002UsuariosPorGrupoEntity {
 
     public void setGrupo(int grupo) {
         this.grupo = grupo;
+    }
+
+    @Basic
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Basic

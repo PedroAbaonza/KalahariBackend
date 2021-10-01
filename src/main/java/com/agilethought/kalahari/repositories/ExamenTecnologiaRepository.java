@@ -20,8 +20,18 @@ public interface ExamenTecnologiaRepository extends CrudRepository<V004ExamenPor
             "on ut.cdTemplate = t.cdTemplate " +
             "having t.nombre like 'Jav%' " +
             "order by u.nombre, t.nombre, fechaAplicacion;")
-
-
     List<V004ExamenPorTecnologiaEntity> getExamenTecnologia();
+
+    @Query(nativeQuery = true, value = "select u.nombre, descripcion as Grupo, fechaAplicacion, t.nombre as Nombre_Examen, calificacion " +
+            "from T000_USUARIOS u " +
+            "inner join T011_GRUPO g " +
+            "on u.grupo  = g.cdGrupo " +
+            "inner join T008_USUARIO_TEMPLATE ut " +
+            "on u.usuarioToken = ut.usuarioToken " +
+            "inner join T006_TEMPLATE t " +
+            "on ut.cdTemplate = t.cdTemplate " +
+            "where t.cdTemplate = ?1 " +
+            "order by u.nombre, t.nombre, fechaAplicacion;")
+    List<V004ExamenPorTecnologiaEntity> getExamenTecnologia(Integer tecnologia);
 }
 

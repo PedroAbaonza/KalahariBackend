@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -14,5 +15,9 @@ public class UsuarioService {
 
     public ArrayList<T000UsuariosEntity> obtenerUsuarios() {
         return (ArrayList<T000UsuariosEntity>) usuarioRepository.findAll();
+    }
+
+    public Optional<T000UsuariosEntity> obtenerUsuario(String cdToken) {
+        return usuarioRepository.findById(cdToken);
     }
 }
