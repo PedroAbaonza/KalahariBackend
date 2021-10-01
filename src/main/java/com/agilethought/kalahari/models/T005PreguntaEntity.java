@@ -1,7 +1,10 @@
 package com.agilethought.kalahari.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +30,9 @@ public class T005PreguntaEntity {
     private T002NivelEntity t002NivelByNivel;
     private T003IdiomaEntity t003IdiomaByIdioma;
     private T004TipoPreguntaEntity t004TipoPreguntaByTipo;
+    //Se agrego este atributo para poder obtener la columna de tiempoRespuesta de la tabla TemplatePregunta
+    //private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
+    private List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -202,8 +208,8 @@ public class T005PreguntaEntity {
         return Objects.hash(cdPregunta, pregunta, respuesta1, respuesta2, respuesta3, respuesta4, correcta1, correcta2, correcta3, correcta4, explicacion, creador, fhCreacion, autorizador, fhAutorizacion, rate);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "tecnologia", referencedColumnName = "cdTecnologia")
     public T001TecnologiaEntity getT001TecnologiaByTecnologia() {
         return t001TecnologiaByTecnologia;
     }
@@ -211,6 +217,7 @@ public class T005PreguntaEntity {
     public void setT001TecnologiaByTecnologia(T001TecnologiaEntity t001TecnologiaByTecnologia) {
         this.t001TecnologiaByTecnologia = t001TecnologiaByTecnologia;
     }
+
 
     @ManyToOne
     @JoinColumn(name = "nivel", referencedColumnName = "cdNivel")
@@ -233,12 +240,21 @@ public class T005PreguntaEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tipo", referencedColumnName = "cdTipoPregunta", nullable = false)
+    @JoinColumn(name = "tipo", referencedColumnName = "cdTipoPregunta")
     public T004TipoPreguntaEntity getT004TipoPreguntaByTipo() {
         return t004TipoPreguntaByTipo;
     }
 
     public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
         this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
+    }
+    @JsonIgnore
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
+    public List<T007TemplatePreguntaEntity> getT007TemplatePreguntaEntity() {
+        return t007TemplatePreguntaEntity;
+    }
+
+    public void setT007TemplatePreguntaEntity(List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity) {
+        this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
     }
 }
