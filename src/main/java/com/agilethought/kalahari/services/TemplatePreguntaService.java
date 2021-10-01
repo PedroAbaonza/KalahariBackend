@@ -1,5 +1,6 @@
 package com.agilethought.kalahari.services;
 
+import com.agilethought.kalahari.dto.PreguntaTemplateResponse;
 import com.agilethought.kalahari.models.T007TemplatePreguntaEntity;
 import com.agilethought.kalahari.repositories.TemplatePreguntaRepository;
 import com.agilethought.kalahari.utils.FuncionesRepositorios;
@@ -33,10 +34,10 @@ public class TemplatePreguntaService implements GenericoService<T007TemplatePreg
         return FuncionesRepositorios.actualizar(templatePreguntaRepository, object, object.getCdTemplatePregunta());
     }
 
-    public ArrayList<String> getPreguntas(int cd){
-        ArrayList<String> lista = templatePreguntaRepository.getPreguntas(cd);
+    public ArrayList<PreguntaTemplateResponse> getPreguntas(int cd){
+        ArrayList<PreguntaTemplateResponse> lista =  templatePreguntaRepository.getPreguntas(cd);
         if(lista.isEmpty())
-            lista.add("Sin preguntas");
+            lista.add(new PreguntaTemplateResponse(0, "Sin preguntas"));
         return lista;
     }
 

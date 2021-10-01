@@ -1,5 +1,6 @@
 package com.agilethought.kalahari.controllers;
 
+import com.agilethought.kalahari.dto.PreguntaTemplateResponse;
 import com.agilethought.kalahari.models.T007TemplatePreguntaEntity;
 import com.agilethought.kalahari.services.TemplatePreguntaService;
 import com.agilethought.kalahari.utils.FuncionesController;
@@ -39,7 +40,7 @@ public class TemplatePreguntaController implements GenericoController<T007Templa
     }
 
     @GetMapping("listaPreguntas/{id}")
-    public @ResponseBody ArrayList<String> getPreguntas(@PathVariable("id") Integer cd){
+    public @ResponseBody ArrayList<PreguntaTemplateResponse> getPreguntas(@PathVariable("id") Integer cd){
         return templatePreguntaService.getPreguntas(cd);
     }
 
