@@ -11,7 +11,7 @@ import java.util.List;
 public interface TemplatePreguntaRepository extends JpaRepository<T007TemplatePreguntaEntity, Integer> {
 
     @Query("Select new com.agilethought.kalahari.dto.PreguntaTemplateResponse(T005.cdPregunta, T005.pregunta) from T007TemplatePreguntaEntity T007 join T007.t006TemplateByCdTemplate T006" +
-            " join T007.t005PreguntaByCdPregunta T005 where T006.cdTemplate = ?1 and T005.status = 1")
+            " join T007.t005PreguntaByCdPregunta T005 where T006.cdTemplate = ?1 and T007.status = 1 and T005.status = 1")
     ArrayList<PreguntaTemplateResponse> getPreguntas(int cd);
 
     @Query(value = "select  distinct T005.cdPregunta AS cdPregunta, T005.pregunta AS pregunta from T007_TEMPLATE_PREGUNTA T007 " +
