@@ -28,18 +28,22 @@ public class UsuariosRHController {
     public String agregarUsuario(@RequestBody T013UsuariosRH t013UsuariosRH){
         return usuarioRHService.agregarUsuarioRH(t013UsuariosRH);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getusuario/{email}")
     public T013UsuariosRH obtenerUsuariorhemail(@PathVariable String email){
         return usuarioRHService.obtenerPoremail(email);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/intento/{email}")
     public String aumentocont(@PathVariable String email){
         return usuarioRHService.aumentoCount(email);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/bloqueo/{email}")
     public  String disableUsuario(@PathVariable String email){
         return  usuarioRHService.disableUsuariorh(email);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/default/{email}")
     public  String enableUsuario(@PathVariable String email){
         return  usuarioRHService.enableUsuariorh(email);
