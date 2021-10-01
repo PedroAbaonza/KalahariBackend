@@ -44,4 +44,8 @@ public class TemplatePreguntaService implements GenericoService<T007TemplatePreg
     public List<?> getPreguntasSinTemplate(int cd){
         return templatePreguntaRepository.getPreguntasSinTemplate(cd);
     }
+
+    public int modificarStatus(int status, int cdPregunta, int cdTemplate){
+       return templatePreguntaRepository.modificarStatus(status, cdPregunta, cdTemplate);
+    }
 }

@@ -48,4 +48,9 @@ public class TemplatePreguntaController implements GenericoController<T007Templa
     public @ResponseBody List<?> getPreguntasSinTemplate(@PathVariable("id") Integer cd){
         return templatePreguntaService.getPreguntasSinTemplate(cd);
     }
+
+    @PutMapping("modificarStatus/{a}/{b}/{c}")
+    public @ResponseBody int modificarStatus(@PathVariable("a") int status, @PathVariable("b") int cdPregunta, @PathVariable("c") int cdTemplate){
+        return templatePreguntaService.modificarStatus(status, cdPregunta, cdTemplate);
+    }
 }
