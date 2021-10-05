@@ -33,6 +33,7 @@ public class T005PreguntaEntity {
     //Se agrego este atributo para poder obtener la columna de tiempoRespuesta de la tabla TemplatePregunta
     //private T007TemplatePreguntaEntity t007TemplatePreguntaEntity;
     private List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity;
+    private int status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -248,13 +249,24 @@ public class T005PreguntaEntity {
     public void setT004TipoPreguntaByTipo(T004TipoPreguntaEntity t004TipoPreguntaByTipo) {
         this.t004TipoPreguntaByTipo = t004TipoPreguntaByTipo;
     }
+
     @JsonIgnore
-    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class, mappedBy = "t005PreguntaByCdPregunta")
+    @OneToMany(targetEntity = T007TemplatePreguntaEntity.class,  mappedBy = "t005PreguntaByCdPregunta")
     public List<T007TemplatePreguntaEntity> getT007TemplatePreguntaEntity() {
         return t007TemplatePreguntaEntity;
     }
 
     public void setT007TemplatePreguntaEntity(List<T007TemplatePreguntaEntity> t007TemplatePreguntaEntity) {
         this.t007TemplatePreguntaEntity = t007TemplatePreguntaEntity;
+    }
+
+    @Basic
+    @Column(name = "status")
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

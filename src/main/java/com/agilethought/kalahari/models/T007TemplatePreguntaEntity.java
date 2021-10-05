@@ -10,6 +10,7 @@ public class T007TemplatePreguntaEntity {
     private Integer tiempoRespuesta;
     private T006TemplateEntity t006TemplateByCdTemplate;
     private T005PreguntaEntity t005PreguntaByCdPregunta;
+    private int status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,5 +64,15 @@ public class T007TemplatePreguntaEntity {
 
     public void setT005PreguntaByCdPregunta(T005PreguntaEntity t005PreguntaByCdPregunta) {
         this.t005PreguntaByCdPregunta = t005PreguntaByCdPregunta;
+    }
+
+    @Basic
+    @Column(name = "status")
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
