@@ -1,0 +1,7 @@
+runtime: java8
+instance_class: F1
+env_variables:
+  CLOUD_SQL_CONNECTION_NAME: "outstanding-map-307314:us-central1:kalahari"
+  DB_NAME: "academias"
+  DB_USER: "kalahariAcademia"
+  DB_PASS: "Academia01"
